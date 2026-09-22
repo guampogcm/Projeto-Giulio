@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+  <title>CRUD Estudante</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Inicio</a> |
+    <a href="usuario.html">Usuario</a> |
+    <a href="estudante.html">Estudante</a> |
+    <a href="mentora.html">Mentora</a> |
+    <a href="mentoria.html">Mentoria</a> |
+    <a href="evento.html">Evento</a>
+  </nav>
+
+  <h1>Cadastro de Estudante</h1>
+  <form id="form" class="cadastro-estudante-tabela" onsubmit="salvar(); return false;">
+    <label>ID Estudante:</label>
+    <input type="text" id="id_estudante" required><br><br>
+
+    <label>Nome:</label>
+    <input type="text" id="nome" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" id="email"><br><br>
+
+    <label>Curso:</label>
+    <input type="text" id="curso"><br><br>
+
+    <label>Periodo:</label>
+    <input type="text" id="periodo"><br><br>
+
+    <label>Telefone:</label>
+    <input type="text" id="telefone"><br><br>
+
+    <label>Area de Interesse:</label>
+    <input type="text" id="area_interesse"><br><br>
+
+    <label>Data Inicio no Projeto:</label>
+    <input type="date" id="data_inicio"><br><br>
+
+    <button type="submit">Salvar</button>
+
+  </form>
+
+  <h2>Lista de Estudantes</h2>
+  <table border="1" cellpadding="5">
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Curso</th>
+      <th>Periodo</th>
+      <th>Telefone</th>
+      <th>Area Interesse</th>
+      <th>Data Inicio</th>
+      <th>Editar</th>
+    </tr>
+    <tbody id="tabela"></tbody>
+  </table>
+
+  <script src="estudante.js"></script>
+</body>
+</html>

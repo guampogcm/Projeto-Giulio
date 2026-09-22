@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD Mentoria</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Inicio</a> |
+    <a href="usuario.html">Usuario</a> |
+    <a href="estudante.html">Estudante</a> |
+    <a href="mentora.html">Mentora</a> |
+    <a href="mentoria.html">Mentoria</a> |
+    <a href="evento.html">Evento</a>
+  </nav>
+
+  <h1>Cadastro de Mentoria</h1>
+
+  <form id="form" class="cadastro-mentoria-tabela" onsubmit="salvar(); return false;">
+    <label>ID Mentoria:</label>
+    <input type="text" id="id_mentoria" required><br><br>
+
+    <label>Data Inicio:</label>
+    <input type="date" id="data_inicio"><br><br>
+
+    <label>Data Fim:</label>
+    <input type="date" id="data_fim"><br><br>
+
+    <label>Status:</label>
+    <input type="text" id="status"><br><br>
+
+    <label>Objetivo:</label>
+    <input type="text" id="objetivo"><br><br>
+
+    <button type="submit">Salvar</button>
+  </form>
+
+  <h2>Lista de Mentorias</h2>
+  <table border="1" cellpadding="5">
+    <tr>
+      <th>ID</th>
+      <th>Data Inicio</th>
+      <th>Data Fim</th>
+      <th>Status</th>
+      <th>Objetivo</th>
+      <th>Editar</th>
+    </tr>
+    <tbody id="tabela"></tbody>
+  </table>
+
+  <script src="mentoria.js"></script>
+</body>
+</html>

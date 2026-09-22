@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+  <title>CRUD Evento</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Inicio</a> |
+    <a href="usuario.html">Usuario</a> |
+    <a href="estudante.html">Estudante</a> |
+    <a href="mentora.html">Mentora</a> |
+    <a href="mentoria.html">Mentoria</a> |
+    <a href="evento.html">Evento</a>
+  </nav>
+
+  <h1>Cadastro de Evento</h1>
+
+  <form id="form" class="cadastro-evento-tabela" onsubmit="salvar(); return false;">
+    <label>ID Evento:</label>
+    <input type="text" id="id_evento" required><br><br>
+
+    <label>Nome:</label>
+    <input type="text" id="nome" required><br><br>
+
+    <label>Data do Evento:</label>
+    <input type="date" id="data_evento"><br><br>
+
+    <button type="submit">Salvar</button>
+  </form>
+
+  <h2>Lista de Eventos</h2>
+  <table border="1" cellpadding="5">
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Data</th>
+      <th>Acoes</th>
+    </tr>
+    <tbody id="tabela"></tbody>
+  </table>
+
+  <script src="evento.js"></script>
+</body>
+</html>
