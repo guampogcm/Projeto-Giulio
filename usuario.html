@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8">
+<head>
+  <meta charset="UTF-8">
   <title>CRUD Usuario</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -17,15 +17,15 @@
   </nav>
 
   <h1>Cadastro de Usuario</h1>
-  <form id="form" class="cadastro-usuario-tabela" onsubmit="salvar(); return false;">
+  <form id="form" class="cadastro-usuario-tabela" novalidate>
     <label>ID Usuario:</label>
-    <input type="text" id="id_usuario" required><br><br>
+    <input type="text" id="id_usuario"><br><br>
 
     <label>Login:</label>
-    <input type="text" id="login" required><br><br>
+    <input type="text" id="login"><br><br>
 
     <label>Nome:</label>
-    <input type="text" id="nome" required><br><br>
+    <input type="text" id="nome"><br><br>
 
     <label>Telefone:</label>
     <input type="text" id="telefone"><br><br>
@@ -38,14 +38,16 @@
 
   <h2>Lista de Usuarios</h2>
   <table border="1" cellpadding="5">
-    <tr>
-      <th>ID</th>
-      <th>Login</th>
-      <th>Nome</th>
-      <th>Telefone</th>
-      <th>Email</th>
-      <th>Editar</th>
-    </tr>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Login</th>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
     <tbody id="tabela"></tbody>
   </table>
 
