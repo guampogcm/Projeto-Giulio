@@ -14,7 +14,6 @@ function adicionar(dados) {
   const lista = listar();
   const novo = {
     id: Date.now(), 
-    id_usuario: dados.id_usuario.trim(),
     login: dados.login.trim(),
     nome: dados.nome.trim(),
     telefone: dados.telefone.trim(),
@@ -34,7 +33,6 @@ function editar(id, dados) {
     u.id === id
       ? {
           ...u,
-          id_usuario: dados.id_usuario.trim(),
           login: dados.login.trim(),
           nome: dados.nome.trim(),
           telefone: dados.telefone.trim(),
@@ -69,7 +67,7 @@ function renderLista() {
 
   if (usuarios.length === 0) {
     tabela.innerHTML =
-      '<tr class="vazio"><td colspan="6">Nenhum usuário.</td></tr>';
+      '<tr class="vazio"><td colspan="5">Nenhum usuário.</td></tr>';
     return;
   }
 
@@ -77,7 +75,6 @@ function renderLista() {
     .map(
       (u) => `
     <tr data-id="${u.id}">
-      <td>${u.id_usuario}</td>
       <td>${u.login}</td>
       <td>${u.nome}</td>
       <td>${u.telefone}</td>
@@ -99,7 +96,6 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const dados = {
-    id_usuario: document.getElementById("id_usuario").value,
     login: document.getElementById("login").value,
     nome: inputNome.value,
     telefone: document.getElementById("telefone").value,
@@ -139,7 +135,6 @@ document.getElementById("tabela").addEventListener("click", (e) => {
     const u = listar().find((x) => x.id === id);
     if (!u) return;
 
-    document.getElementById("id_usuario").value = u.id_usuario;
     document.getElementById("login").value = u.login;
     inputNome.value = u.nome;
     document.getElementById("telefone").value = u.telefone;
