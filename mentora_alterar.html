@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alterar Mentora</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <nav class="navbar-topicos">
+    <a href="../index.html">Inicio</a> |
+    <a href="usuario.html">Usuario</a> |
+    <a href="estudante.html">Estudante</a> |
+    <a href="mentora.html">Mentora</a> |
+    <a href="mentoria.html">Mentoria</a> |
+    <a href="evento.html">Evento</a>
+  </nav>
+
+  <h1>Alterar Mentora</h1>
+
+  <form id="form" class="cadastro-mentora-tabela">
+    <!-- FK id_usuario: a mentora e escolhida entre os usuarios ja cadastrados.
+         As opcoes sao carregadas pelo JS (php/mentora_usuarias.php). -->
+    <label for="id_usuario">Usuária:</label>
+    <select id="id_usuario">
+      <option value="">Carregando...</option>
+    </select>
+
+    <label for="disponibilidade">Disponibilidade por mês:</label>
+    <input type="text" id="disponibilidade" maxlength="50" placeholder="ex.: 4 horas">
+
+    <label for="area_atuacao">Área de Atuação:</label>
+    <input type="text" id="area_atuacao" maxlength="100">
+
+    <label for="empresa">Empresa (Se estudante, favor informar):</label>
+    <input type="text" id="empresa" maxlength="100">
+
+    <!-- guarda o id da mentora que esta sendo alterada -->
+    <input type="hidden" id="id">
+
+    <button type="button" id="enviar">Salvar alterações</button>
+  </form>
+
+  <a href="mentora.html">&larr; Voltar para a lista</a>
+
+  <script src="../js/mentora_alterar.js"></script>
+</body>
+</html>

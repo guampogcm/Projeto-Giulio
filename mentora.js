@@ -1,54 +1,68 @@
-var lista = JSON.parse(localStorage.getItem("mentoras")) || [];
-var editando = -1;
+// Quando a pagina terminar de carregar, busca as mentoras no banco
+document.addEventListener('DOMContentLoaded', () => {
+    buscar();
+});
 
-function salvar() {
-  var mentora = {
-    id_mentora: document.getElementById("id_mentora").value,
-    disponibilidade: document.getElementById("disponibilidade").value,
-    area_atuacao: document.getElementById("area_atuacao").value,
-    empresa: document.getElementById("empresa").value
-  };
+// READ - busca todas as mentoras (fetch GET simples, sem parametros)
+async function buscar() {
+    const retorno  = await fetch('../php/mentora_get.php');
+    const resposta = await retorno.json();
 
-  if (editando == -1) {
-    lista.push(mentora);
-  } else {
-    lista[editando] = mentora;
-    editando = -1;
-  }
-
-  localStorage.setItem("mentoras", JSON.stringify(lista));
-  document.getElementById("form").reset();
-  mostrar();
+    if (resposta.status == 'ok') {
+        preencherTabela(resposta.data);
+    } else {
+        // status 'nok' = nao ha registros no banco
+        document.getElementById('lista').innerHTML =
+            '<p class="mensagem-vazia">Nenhuma mentora cadastrada.</p>';
+    }
 }
 
-function mostrar() {
-  var tabela = document.getElementById("tabela");
-  tabela.innerHTML = "";
+// Monta a tabela HTML com o array que veio do PHP (resposta.data)
+// nome e email vem da tabela usuario (JOIN feito no mentora_get.php)
+function preencherTabela(tabela) {
+    let html = `
+        <table class="tabela-centro">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Disponibilidade</th>
+                <th>Área de Atuação</th>
+                <th>Empresa</th>
+                <th>Ações</th>
+            </tr>`;
 
-  for (var i = 0; i < lista.length; i++) {
-    var linha = "<tr>";
-    linha += "<td>" + lista[i].id_mentora + "</td>";
-    linha += "<td>" + lista[i].disponibilidade + "</td>";
-    linha += "<td>" + lista[i].area_atuacao + "</td>";
-    linha += "<td>" + lista[i].empresa + "</td>";
-    linha += "<td><button onclick='editar(" + i + ")'>Editar</button> <button onclick='excluir(" + i + ")'>Excluir</button></td>";
-    linha += "</tr>";
-    tabela.innerHTML += linha;
-  }
+    for (const m of tabela) {
+        html += `
+            <tr>
+                <td>${m.id_mentoras}</td>
+                <td>${m.nome}</td>
+                <td>${m.email}</td>
+                <td>${m.disponibilidade}</td>
+                <td>${m.area_atuacao}</td>
+                <td>${m.empresa ?? ''}</td>
+                <td class="acoes">
+                    <a href="mentora_alterar.html?id=${m.id_mentoras}"><button type="button">Editar</button></a>
+                    <button type="button" class="btn-excluir" onclick="excluir(${m.id_mentoras})">Excluir</button>
+                </td>
+            </tr>`;
+    }
+
+    html += '</table>';
+    document.getElementById('lista').innerHTML = html;
 }
 
-function editar(i) {
-  document.getElementById("id_mentora").value = lista[i].id_mentora;
-  document.getElementById("disponibilidade").value = lista[i].disponibilidade;
-  document.getElementById("area_atuacao").value = lista[i].area_atuacao;
-  document.getElementById("empresa").value = lista[i].empresa;
-  editando = i;
-}
+// DELETE - envia o ID pela URL (GET) para o PHP excluir
+async function excluir(id) {
+    if (!confirm('Deseja realmente excluir esta mentora?')) {
+        return; // usuario cancelou
+    }
 
-function excluir(i) {
-  lista.splice(i, 1);
-  localStorage.setItem("mentoras", JSON.stringify(lista));
-  mostrar();
-}
+    const retorno  = await fetch('../php/mentora_excluir.php?id=' + id);
+    const resposta = await retorno.json();
 
-mostrar();
+    alert(resposta.mensagem);
+    if (resposta.status == 'ok') {
+        buscar(); // recarrega a lista com os dados atualizados do banco
+    }
+}
