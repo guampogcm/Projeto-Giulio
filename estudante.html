@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-  <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8">
-  <title>CRUD Estudante</title>
-  <link rel="stylesheet" href="style.css">
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudantes</title>
+  <!-- Caminhos ../css, ../js e ../php seguem o mesmo padrao das telas da mentora -->
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <nav>
-    <a href="index.html">Inicio</a> |
+  <nav class="navbar-topicos">
+    <a href="../index.html">Inicio</a> |
     <a href="usuario.html">Usuario</a> |
     <a href="estudante.html">Estudante</a> |
     <a href="mentora.html">Mentora</a> |
@@ -16,52 +18,14 @@
     <a href="evento.html">Evento</a>
   </nav>
 
-  <h1>Cadastro de Estudante</h1>
-  <form id="form" class="cadastro-estudante-tabela" onsubmit="salvar(); return false;">
-    <label>ID Estudante:</label>
-    <input type="text" id="id_estudante" required><br><br>
+  <h1>Lista de Estudantes</h1>
 
-    <label>Nome:</label>
-    <input type="text" id="nome" required><br><br>
+  <!-- O cadastro agora fica numa pagina propria (estudante_novo.html) -->
+  <a href="estudante_novo.html"><button type="button">+ Novo estudante</button></a>
 
-    <label>Email:</label>
-    <input type="email" id="email"><br><br>
+  <!-- A tabela e montada pelo JS (estudante.js) com os dados que vem do PHP -->
+  <div id="lista"></div>
 
-    <label>Curso:</label>
-    <input type="text" id="curso"><br><br>
-
-    <label>Periodo:</label>
-    <input type="text" id="periodo"><br><br>
-
-    <label>Telefone:</label>
-    <input type="text" id="telefone"><br><br>
-
-    <label>Area de Interesse:</label>
-    <input type="text" id="area_interesse"><br><br>
-
-    <label>Data Inicio no Projeto:</label>
-    <input type="date" id="data_inicio"><br><br>
-
-    <button type="submit">Salvar</button>
-
-  </form>
-
-  <h2>Lista de Estudantes</h2>
-  <table border="1" cellpadding="5">
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Curso</th>
-      <th>Periodo</th>
-      <th>Telefone</th>
-      <th>Area Interesse</th>
-      <th>Data Inicio</th>
-      <th>Editar</th>
-    </tr>
-    <tbody id="tabela"></tbody>
-  </table>
-
-  <script src="estudante.js"></script>
+  <script src="../js/estudante.js"></script>
 </body>
 </html>

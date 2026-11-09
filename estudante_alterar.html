@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alterar Estudante</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <nav class="navbar-topicos">
+    <a href="../index.html">Inicio</a> |
+    <a href="usuario.html">Usuario</a> |
+    <a href="estudante.html">Estudante</a> |
+    <a href="mentora.html">Mentora</a> |
+    <a href="mentoria.html">Mentoria</a> |
+    <a href="evento.html">Evento</a>
+  </nav>
+
+  <h1>Alterar Estudante</h1>
+
+  <!-- Os campos comecam vazios; o JS busca o estudante no banco e preenche -->
+  <form id="form" class="cadastro-estudante-tabela">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" maxlength="100" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" maxlength="100">
+
+    <label for="curso">Curso:</label>
+    <input type="text" id="curso" maxlength="100">
+
+    <label for="periodo">Periodo:</label>
+    <input type="text" id="periodo" maxlength="20" placeholder="ex.: 3º semestre">
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" id="telefone" maxlength="20">
+
+    <label for="area_interesse">Area de Interesse:</label>
+    <input type="text" id="area_interesse" maxlength="100">
+
+    <label for="data_inicio">Data Inicio no Projeto:</label>
+    <input type="date" id="data_inicio">
+
+    <!-- guarda o id do estudante que esta sendo alterado (o usuario nao ve) -->
+    <input type="hidden" id="id">
+
+    <button type="button" id="enviar">Salvar alterações</button>
+  </form>
+
+  <a href="estudante.html">&larr; Voltar para a lista</a>
+
+  <script src="../js/estudante_alterar.js"></script>
+</body>
+</html>

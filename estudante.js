@@ -1,66 +1,85 @@
-var lista = JSON.parse(localStorage.getItem("estudantes")) || [];
-var editando = -1;
+// estudante.js
+// Tela de LISTA: busca os estudantes no banco (READ) e permite excluir (DELETE).
+// O JS nao acessa o banco direto: ele chama os arquivos PHP com fetch.
 
-function salvar() {
-  var estudante = {
-    id_estudante: document.getElementById("id_estudante").value,
-    nome: document.getElementById("nome").value,
-    email: document.getElementById("email").value,
-    curso: document.getElementById("curso").value,
-    periodo: document.getElementById("periodo").value,
-    telefone: document.getElementById("telefone").value,
-    area_interesse: document.getElementById("area_interesse").value,
-    data_inicio: document.getElementById("data_inicio").value
-  };
+// Quando a pagina terminar de carregar, busca os estudantes no banco
+document.addEventListener('DOMContentLoaded', () => {
+    buscar();
+});
 
-  if (editando == -1) {
-    lista.push(estudante);
-  } else {
-    lista[editando] = estudante;
-    editando = -1;
-  }
+// READ - busca todos os estudantes (fetch GET simples, sem parametros)
+async function buscar() {
+    const retorno  = await fetch('../php/estudante_get.php');
+    const resposta = await retorno.json(); // { status, mensagem, data }
 
-  localStorage.setItem("estudantes", JSON.stringify(lista));
-  document.getElementById("form").reset();
-  mostrar();
+    if (resposta.status == 'ok') {
+        preencherTabela(resposta.data);
+    } else {
+        // status 'nok' = nao ha registros no banco
+        document.getElementById('lista').innerHTML =
+            '<p class="mensagem-vazia">Nenhum estudante cadastrado.</p>';
+    }
 }
 
-function mostrar() {
-  var tabela = document.getElementById("tabela");
-  tabela.innerHTML = "";
+// Monta a tabela HTML com o array que veio do PHP (resposta.data)
+function preencherTabela(tabela) {
+    let html = `
+        <table class="tabela-centro">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Curso</th>
+                <th>Período</th>
+                <th>Telefone</th>
+                <th>Área de Interesse</th>
+                <th>Data Início</th>
+                <th>Ações</th>
+            </tr>`;
 
-  for (var i = 0; i < lista.length; i++) {
-    var linha = "<tr>";
-    linha += "<td>" + lista[i].id_estudante + "</td>";
-    linha += "<td>" + lista[i].nome + "</td>";
-    linha += "<td>" + lista[i].email + "</td>";
-    linha += "<td>" + lista[i].curso + "</td>";
-    linha += "<td>" + lista[i].periodo + "</td>";
-    linha += "<td>" + lista[i].telefone + "</td>";
-    linha += "<td>" + lista[i].area_interesse + "</td>";
-    linha += "<td>" + lista[i].data_inicio + "</td>";
-    linha += "<td><button onclick='editar(" + i + ")'>Editar</button> <button onclick='excluir(" + i + ")'>Excluir</button></td>";
-    linha += "</tr>";
-    tabela.innerHTML += linha;
-  }
+    // Para cada estudante (e) do array, cria uma linha <tr>
+    // ?? '' mostra vazio em vez de "null" quando o campo nao foi preenchido
+    for (const e of tabela) {
+        html += `
+            <tr>
+                <td>${e.id_estudante}</td>
+                <td>${e.nome}</td>
+                <td>${e.email ?? ''}</td>
+                <td>${e.curso ?? ''}</td>
+                <td>${e.periodo ?? ''}</td>
+                <td>${e.telefone ?? ''}</td>
+                <td>${e.area_interesse ?? ''}</td>
+                <td>${formatarData(e.data_inicio)}</td>
+                <td class="acoes">
+                    <!-- Editar abre outra pagina levando o id na URL -->
+                    <a href="estudante_alterar.html?id=${e.id_estudante}"><button type="button">Editar</button></a>
+                    <button type="button" class="btn-excluir" onclick="excluir(${e.id_estudante})">Excluir</button>
+                </td>
+            </tr>`;
+    }
+
+    html += '</table>';
+    document.getElementById('lista').innerHTML = html;
 }
 
-function editar(i) {
-  document.getElementById("id_estudante").value = lista[i].id_estudante;
-  document.getElementById("nome").value = lista[i].nome;
-  document.getElementById("email").value = lista[i].email;
-  document.getElementById("curso").value = lista[i].curso;
-  document.getElementById("periodo").value = lista[i].periodo;
-  document.getElementById("telefone").value = lista[i].telefone;
-  document.getElementById("area_interesse").value = lista[i].area_interesse;
-  document.getElementById("data_inicio").value = lista[i].data_inicio;
-  editando = i;
+// O banco devolve a data como 'AAAA-MM-DD'; aqui mostramos como 'DD/MM/AAAA'
+function formatarData(data) {
+    if (!data) return '';
+    const [ano, mes, dia] = data.split('-');
+    return `${dia}/${mes}/${ano}`;
 }
 
-function excluir(i) {
-  lista.splice(i, 1);
-  localStorage.setItem("estudantes", JSON.stringify(lista));
-  mostrar();
-}
+// DELETE - envia o ID pela URL (GET) para o PHP excluir
+async function excluir(id) {
+    if (!confirm('Deseja realmente excluir este estudante?')) {
+        return; // usuario cancelou
+    }
 
-mostrar();
+    const retorno  = await fetch('../php/estudante_excluir.php?id=' + id);
+    const resposta = await retorno.json();
+
+    alert(resposta.mensagem);
+    if (resposta.status == 'ok') {
+        buscar(); // recarrega a lista com os dados atualizados do banco
+    }
+}
