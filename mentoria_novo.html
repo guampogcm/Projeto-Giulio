@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Mentoria</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar-topicos">
+    <a href="index.html">Inicio</a> |
+    <a href="usuario.html">Usuario</a> |
+    <a href="estudante.html">Estudante</a> |
+    <a href="mentora.html">Mentora</a> |
+    <a href="mentoria.html">Mentoria</a> |
+    <a href="evento.html">Evento</a>
+  </nav>
+
+  <h1>Cadastro de Mentoria</h1>
+
+  <form id="form" class="cadastro-mentoria-tabela">
+    <label for="data_inicio">Data Inicio:</label>
+    <input type="date" id="data_inicio"><br><br>
+
+    <label for="data_fim">Data Fim:</label>
+    <input type="date" id="data_fim"><br><br>
+
+    <label for="status">Status:</label>
+    <input type="text" id="status" maxlength="50" placeholder="ex.: Em andamento, Concluída" required><br><br>
+
+    <label for="objetivo">Objetivo:</label>
+    <input type="text" id="objetivo" maxlength="255" placeholder="Objetivo da mentoria" required><br><br>
+
+    <button type="button" id="enviar">Salvar</button>
+  </form>
+
+  <p><a href="mentoria.html">&larr; Voltar para a lista</a></p>
+
+  <script src="mentoria_novo.js"></script>
+</body>
+</html>
